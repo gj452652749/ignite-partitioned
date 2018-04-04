@@ -15,6 +15,7 @@ import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.query.ContinuousQuery;
 import org.apache.ignite.cache.query.QueryCursor;
 import org.apache.ignite.cache.query.ScanQuery;
+import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.events.CacheEvent;
 import org.apache.ignite.events.EventType;
 import org.apache.ignite.lang.IgniteBiPredicate;
@@ -27,6 +28,7 @@ public class AppDao {
 	IgniteCache<Integer, String> cache=null;
 	ContinuousQuery<Integer, String> qry=null;
 	QueryCursor<Cache.Entry<Integer, String>> cur=null;//这个生命周期必须是全局的
+
 	@PostConstruct
 	public void init() {
 		System.out.println("partitioned启动！");
@@ -51,7 +53,7 @@ public class AppDao {
                 }
             }
         });
-        pull();
+       // pull();
 	}
 	public void pull() {
 		cur = cache.query(qry);

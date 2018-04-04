@@ -31,21 +31,38 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="ignite.cfg" class="org.apache.ignite.configuration.IgniteConfiguration">
+        <!-- Enabling Apache Ignite native persistence. -->
+        <property name="dataStorageConfiguration">
+            <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
+                <property name="defaultDataRegionConfiguration">
+                    <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                        <property name="persistenceEnabled" value="true"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
         <property name="cacheConfiguration">
             <list>
                 <!-- Partitioned cache example configuration (Atomic mode). -->
                 <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="shard"/>
+                    <property name="name" value="default"/>
+                    <!-- Set cache mode. -->
                     <property name="atomicityMode" value="ATOMIC"/>
                     <property name="cacheMode" value="PARTITIONED"/>
                     <property name="backups" value="1"/>
+                    <property name="rebalanceBatchSize" value="#{50 * 1024 * 1024}"/>
+                    <!-- Set throttle interval. -->
+                    <property name="rebalanceThrottle" value="0"/>
                 </bean>
             </list>
+
+
         </property>
 
         <property name="clientMode" value="false"/>
         <property name="peerClassLoadingEnabled" value="true"/>
-
+        <property name="rebalanceThreadPoolSize" value="8" />
+        <property name="systemThreadPoolSize" value="16" />
         <property name="discoverySpi">
         <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
             <property name="ipFinder">
