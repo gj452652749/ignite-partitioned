@@ -64,6 +64,11 @@ public class AppDao {
 		IgniteCache<Integer, String> cache = ignite.getOrCreateCache("demo");
 		return cache.get(key);
 	}
+	/**
+	 * 写的话一般会通过主节点
+	 * @param key
+	 * @param value
+	 */
 	public void put(int key, String value){
 		IgniteCache<Integer, String> cache = ignite.getOrCreateCache("demo");
 		cache.put(key, value);

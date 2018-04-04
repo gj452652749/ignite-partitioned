@@ -37,6 +37,7 @@
                 <bean class="org.apache.ignite.configuration.CacheConfiguration">
                     <property name="name" value="shard"/>
                     <property name="atomicityMode" value="ATOMIC"/>
+                    <!-- 分区的数量并没有指定 -->
                     <property name="cacheMode" value="PARTITIONED"/>
                     <property name="backups" value="1"/>
                 </bean>
