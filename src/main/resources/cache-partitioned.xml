@@ -51,8 +51,10 @@
                     <!-- 分区的数量并没有指定 -->
                     <property name="cacheMode" value="PARTITIONED"/>
                     <property name="backups" value="1"/>
+                    <!-- Rebalance批次大小 -->
                     <property name="rebalanceBatchSize" value="#{50 * 1024 * 1024}"/>
                     <!-- Set throttle interval. -->
+                    <!-- 如果是0，则立即Rebalance -->
                     <property name="rebalanceThrottle" value="0"/>
                 </bean>
             </list>

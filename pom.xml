@@ -16,6 +16,7 @@
 		<spring-data-releasetrain.version>Kay-SR1</spring-data-releasetrain.version>
 		<spring-shell.version>1.2.0.RELEASE</spring-shell.version>
 		<ignite.version>2.4.0</ignite.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
@@ -90,12 +91,16 @@
 			<version>${ignite.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.ignite</groupId>
-		    <artifactId>ignite-zookeeper</artifactId>
-		    <version>${ignite.version}</version>
+			<groupId>org.apache.ignite</groupId>
+			<artifactId>ignite-zookeeper</artifactId>
+			<version>${ignite.version}</version>
 		</dependency>
 	</dependencies>
 	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
 		<repository>
 			<id>central</id>
 			<name>Maven Repository Switchboard</name>

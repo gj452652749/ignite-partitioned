@@ -1,12 +1,10 @@
 package com.jc.microservice.dao;
 
-import java.util.UUID;
+import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.cache.Cache;
-import javax.cache.configuration.Factory;
 import javax.cache.event.CacheEntryEvent;
-import javax.cache.event.CacheEntryEventFilter;
 import javax.cache.event.CacheEntryUpdatedListener;
 
 import org.apache.ignite.Ignite;
@@ -15,11 +13,8 @@ import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.query.ContinuousQuery;
 import org.apache.ignite.cache.query.QueryCursor;
 import org.apache.ignite.cache.query.ScanQuery;
-import org.apache.ignite.configuration.CacheConfiguration;
-import org.apache.ignite.events.CacheEvent;
-import org.apache.ignite.events.EventType;
+import org.apache.ignite.cluster.ClusterNode;
 import org.apache.ignite.lang.IgniteBiPredicate;
-import org.apache.ignite.lang.IgnitePredicate;
 import org.springframework.stereotype.Repository;
 @Repository
 public class AppDao {
@@ -36,6 +31,11 @@ public class AppDao {
 	}
 	public void addListener() {
 		ignite = Ignition.start("cache-partitioned.xml");
+		// Getting all the server nodes that are already up and running.
+		Collection<ClusterNode> nodes = ignite.cluster().forServers().nodes();
+		// Setting the baseline topology that is represented by these nodes.
+		ignite.cluster().setBaselineTopology(nodes);
+		ignite.cluster().active(true);
 		cache = ignite.getOrCreateCache("demo");
 		qry = new ContinuousQuery<>();
 		//初始查询
